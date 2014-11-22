@@ -113,7 +113,8 @@ end
 function HTTPServer:processRequest(client)
     local request = Request:new(client)
     local response =  Response:new(client)
-    self:GET(request, response)
+    local method = self[request:method()]
+    method(self, request, response)
     client:send(response.body)
 end
 function HTTPServer:GET(request, response)
